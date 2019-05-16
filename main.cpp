@@ -57,7 +57,7 @@ int main()
 				else if(znak == 'p' && abc->isValid(game1.getP2()->getGrid(), a.x, a.y, a.hdg)){
 					abc->placeAtXY(game1.getP2()->getGrid(), a.x, a.y, a.hdg);
 				}
-        //reakcja
+
         if( znak == 10 )
         {
 					game1.getP2()->getGrid()->shotAtXY(a.x, a.y);

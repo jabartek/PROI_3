@@ -14,5 +14,3 @@ all: $(appname)
 $(appname): $(objects)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(appname) $(objects) $(LDLIBS) $(POSTFLAGS)
 
-clean:
-	    rm *.o
