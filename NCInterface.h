@@ -3,6 +3,7 @@
 
 #include "ncurses.h"
 
+void visualiseShip(bool,int,int,int,int, WINDOW*);
 
 
 

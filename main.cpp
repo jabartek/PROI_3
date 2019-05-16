@@ -31,7 +31,6 @@ int main()
 		curs_set(0);
     do
     {
-			aaa();
         //pobieranie znaku
         znak = getch();
         clear();
@@ -76,6 +75,7 @@ int main()
 				mvprintw( 0,0, "WASD to move cursor. R to rotate. P to place. Enter to shoot.");
 				mvprintw( 3+2*a.y, 1+2*a.x, ab);
         attroff( A_REVERSE );
+				visualiseShip(abc->isValid(game1.getP2()->getGrid(), a.x, a.y, a.hdg), a.x, a.y, a.hdg, 2, curscr);
 
     } while( znak != 'c' );
 
