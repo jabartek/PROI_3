@@ -1,4 +1,4 @@
-#ifndef STATKI_GAME_H
+ #ifndef STATKI_GAME_H
 #define STATKI_GAME_H
 
 #include <iostream>
@@ -26,17 +26,27 @@ public:
 
   void startGame(int, int, int, int, int, int);
 
-  Player* getP1(){return &P1_;};
-  Player* getP2(){return &P2_;};
+  Player* getP(int);
+  Player* getP1(){
+    return getP(0);
+  };
+  Player* getP2(){
+    return getP(1);
+  };
+
+  inline bool wasStarted(){return isRunning;};
+  inline int currPlayer(){return currentPlayer;};
 
   void abortGame();
 
+
+
+
 private:
+  Player P_[2];
   bool isRunning = false;
   int currentPlayer = 0;
   int shipCounts[4] = {0,0,0,0};
-  Player P1_;
-  Player P2_;
 };
 
 #endif //STATKI_GAME_H

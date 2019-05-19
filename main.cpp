@@ -4,27 +4,32 @@
 #include "Ship.h"
 #include "NCInterface.h"
 
-struct cursor{
-	int x=0;
-	int y=0;
-	int hdg=0;
-};
 
-void aaa();
 
 int main()
 {
-	Game game1;
-	game1.startGame(10,10,10,10,10,10);
-	Ship* abc = new Carrier;
-	std::cout<<abc->placeAtXY(game1.getP2()->getGrid(), 3, 3, 0);
-	abc = new Destroyer;
-	cursor a;
 
     //start
-    initscr();
-		printw( "Press any key to start the program..." );
-    noecho();
+    //initscr();
+		//printw( "Press any key to start the program..." );
+    //noecho();
+
+	  initscr();
+		        start_color();
+	  noecho();
+		curs_set(0);
+		cbreak();
+		Game* game = mainMenuInterface();
+		if (game==nullptr){
+			endwin();
+			return 0;
+		}
+		GUI* gameInterface = initializeGUI(game);
+		if(!game->wasStarted())
+			shipPlacing(game, gameInterface);
+
+		/*
+
     //rozpoczynamy wyswietlanie menu!
     int znak;
 		char ab[] = " ";
@@ -76,12 +81,12 @@ int main()
 				mvprintw( 3+2*a.y, 1+2*a.x, ab);
         attroff( A_REVERSE );
 				visualiseShip(abc->isValid(game1.getP2()->getGrid(), a.x, a.y, a.hdg), a.x, a.y, a.hdg, 2, curscr);
-
     } while( znak != 'c' );
 
     move( 9, 3 );
     printw( "Program stopped. Press any key to continue..." );
     getch();
+		*/
     endwin();
 		return 0;
 
