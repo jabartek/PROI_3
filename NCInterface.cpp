@@ -388,7 +388,7 @@ void printMap(GUI *gameInterface, Game *game, int param, int player){
   mvwprintw(gameInterface->maps[player],0,1,"Player %d",player+1);
   int xSize = game->getP(player)->getGrid()->getXSize();
   int ySize = game->getP(player)->getGrid()->getYSize();
-  char toPrint[2];
+  char toPrint[2]="";
   for(int i=0; i<gameInterface->mapY;i++){
     for(int j=0; j<gameInterface->mapX;j++){
       toPrint[0] = game->getP(player)->getGrid()->renderXY(j,i,param);
