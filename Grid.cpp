@@ -87,12 +87,30 @@ void Grid::printGrid() {
 }
 
 char Grid::renderXY(int xPos, int yPos, int param){
+  bool isThere = false;
   if(xPos < xSize_ && yPos < ySize_ && xPos >= 0 && yPos >= 0){
-    if (ships_[yPos][xPos] != nullptr) {
-        return ships_[yPos][xPos]->renderTile(tileNum_[yPos][xPos], param);
-    }
+  isThere = (ships_[yPos][xPos] != nullptr);
+  switch (param) {
+    case 1:
+    if(revealed_[yPos][xPos]){
+      if (isThere) {
+          return ships_[yPos][xPos]->renderTile(tileNum_[yPos][xPos], param);
+        }
+    else return '=';
   }
-  return '=';
+    else
+      return '?';
+    break;
+
+    default:
+      if (isThere) {
+          return ships_[yPos][xPos]->renderTile(tileNum_[yPos][xPos], param);
+        }
+    else return '=';
+    break;
+  }
+}
+return '?';
 }
 
 void Grid::printGrid(int param) {

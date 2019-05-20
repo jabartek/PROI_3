@@ -25,8 +25,13 @@ int main()
 			return 0;
 		}
 		GUI* gameInterface = initializeGUI(game);
-		if(!game->wasStarted())
+		if(!game->wasStarted()){
 			shipPlacing(game, gameInterface);
+			game->runGame(0);
+		}
+		while(game->hasWon()==-1){
+			shootShips(game, gameInterface);
+		}
 
 		/*
 

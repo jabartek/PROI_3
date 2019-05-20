@@ -41,6 +41,11 @@ void Game::startGame(int xSize, int ySize, int Carriers, int Battleships, int Cr
   }
 }
 
+void Game::runGame(int startingPlayer){
+  isRunning = true;
+  currentPlayer = startingPlayer;
+}
+
 Player* Game::getP(int n){
   if (n==0){
     return &P_[0];
@@ -48,3 +53,11 @@ Player* Game::getP(int n){
   else
   return &P_[1];
 };
+
+int Game::hasWon(){
+  if(getP(0)->isDead())
+    return 0;
+  if(getP(1)->isDead())
+    return 1;
+  return -1;
+}

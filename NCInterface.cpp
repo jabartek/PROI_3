@@ -317,15 +317,70 @@ void placeShipsInterface(Game* game, GUI *gameInterface, int player){
       }
     }
     else if(isPlacing && ch == 'k' && !game->getP(player)->getInventory()->empty()){
-      s=game->getP(player)->getInventory()->front();
-      game->getP(player)->getInventory()->pop_front();
-      game->getP(player)->getInventory()->push_back(s);
+      game->getP(player)->skipInventory();
     }
   }while(ch!='c');
 
 
   return;
 };
+
+void shootShips(Game *game, GUI *gameInterface){
+  char congrats1[] = "Congratulations!";
+  char congrats2[] = "You hit an opponent's ship!";
+  char sad1[] = "Sad :(";
+  char sad2[] = "You missed!";
+  int player = game->currPlayer();
+  int otherPlayer = (player+1)%2;
+  Cursor cur;
+  int ch = 0;
+  int result = -1;
+  holdPlayer(player);
+  clear();
+  refresh();
+  do{
+    printMap(gameInterface, game, 0, player);
+    printMap(gameInterface, game, 1, otherPlayer);
+    printInventory(gameInterface, game, player);
+    printInventory(gameInterface, game, otherPlayer);
+    mvwchgat(gameInterface->maps[otherPlayer],cur.y+2,cur.x+2,1,A_REVERSE,0,nullptr);
+    ch = wgetch(gameInterface->maps[otherPlayer]);
+    if(ch == 'w' && cur.y >0) {
+      cur.y--;
+    }
+    else if(ch == 's' && cur.y < game->getP(1)->getGrid()->getYSize()-1) {
+      cur.y++;
+    }
+    else if(ch == 'a' && cur.x > 0 ){
+      cur.x--;
+    }
+    else if(ch == 'd' && cur.x < game->getP(1)->getGrid()->getXSize()-1){
+      cur.x++;
+    }
+  }while(ch!=10);
+  result = game->getP(otherPlayer)->getGrid()->shotAtXY(cur.x,cur.y);
+  WINDOW *alertResult = newwin(6,30,LINES/2-3,COLS/2-15);
+  switch(result){
+    case (1):
+    mvwprintw(alertResult,2,15-strlen(congrats1)/2,congrats1);
+    mvwprintw(alertResult,3,15-strlen(congrats2)/2,congrats2);
+    break;
+    default:
+    mvwprintw(alertResult,2,15-strlen(sad1)/2,sad1);
+    mvwprintw(alertResult,3,15-strlen(sad2)/2,sad2);
+    break;
+  }
+  box(alertResult,0,0);
+  wrefresh(alertResult);
+    printMap(gameInterface, game, 0, player);
+    printMap(gameInterface, game, 1, otherPlayer);
+    printInventory(gameInterface, game, player);
+    printInventory(gameInterface, game, otherPlayer);
+result = getch();
+delwin(alertResult);
+  game->togglePlayer();
+
+}
 
 void printMap(GUI *gameInterface, Game *game, int param, int player){
   wclear(gameInterface->maps[player]);

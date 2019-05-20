@@ -29,6 +29,8 @@ public:
   void giveShip(Ship*);
   void removeShip(Ship*);
 
+  void skipInventory();
+
 private:
   int pending_[4] = {0,0,0,0};
   int placed_[4] = {0,0,0,0};

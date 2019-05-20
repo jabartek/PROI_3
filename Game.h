@@ -25,6 +25,9 @@ public:
   ~Game();
 
   void startGame(int, int, int, int, int, int);
+  void runGame(int);
+
+  void togglePlayer(){currentPlayer = (currentPlayer+1)%2;};
 
   Player* getP(int);
   Player* getP1(){
@@ -37,6 +40,7 @@ public:
   inline bool wasStarted(){return isRunning;};
   inline int currPlayer(){return currentPlayer;};
 
+  int hasWon();
   void abortGame();
 
 
@@ -45,7 +49,7 @@ public:
 private:
   Player P_[2];
   bool isRunning = false;
-  int currentPlayer = 0;
+  int currentPlayer = -1;
   int shipCounts[4] = {0,0,0,0};
 };
 

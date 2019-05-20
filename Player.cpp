@@ -43,6 +43,13 @@ void Player::removeShip(Ship *s){
   placed_[s->getSize()-2]--;
 }
 
+void Player::skipInventory(){
+  if(!inventory_.empty()){
+    inventory_.push_back(inventory_.front());
+    inventory_.pop_front();
+  }
+}
+
 
 int Player::getPending(int s){return pending_[s];};
 int Player::getPlaced(int s){return placed_[s];};

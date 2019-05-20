@@ -46,6 +46,8 @@ void printMap(GUI*, Game*, int,int);
 
 void holdPlayer(int);
 
+void shootShips(Game*, GUI*);
+
 WINDOW *create_newwin(int height, int width, int starty, int startx);
 void destroy_win(WINDOW *local_win);
 
