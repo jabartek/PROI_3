@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "Ship.h"
 
-#include <fstream> //DEBUG
 
 
 Player::Player(){
@@ -10,12 +9,6 @@ Player::Player(){
 };
 
 Player::~Player(){
-        std::string aa = "debug"; //DEBUG
-        std::ofstream outFile;
-        outFile.open(aa, std::ofstream::out | std::ofstream::app);
-        outFile << "P";
-        outFile.close();
-
         for(Ship* s : inventory_) {
                 delete s;
         }
