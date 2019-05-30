@@ -64,7 +64,6 @@ void destroy_win(WINDOW *local_win);
 Game* mainMenuInterface();
 void newGameInterface(Game*);
 void printNewGameInterface(int*);
-void playGameInterface(Game*);
 void displayWinner(int);
 Game* loadGameInterface();
 void saveGameInterface(Game*);

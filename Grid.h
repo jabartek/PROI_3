@@ -67,9 +67,6 @@ int shotAtXY(int, int);
 
 int getTileNum(int, int);
 
-void printGrid();
-void printGrid(int);
-
 private:
 void allocation();
 int ownerId_;

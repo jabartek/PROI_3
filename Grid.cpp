@@ -82,16 +82,6 @@ Ship* Grid::getShip(int xPos, int yPos) {
         return nullptr;
 }
 
-
-void Grid::printGrid() {
-    for (int i = 0; i < ySize_; i++) {
-        for (int j = 0; j < xSize_; j++) {
-            std::cout << this->getNeighbors(j, i);
-        }
-        std::cout << std::endl;
-    }
-}
-
 char Grid::renderXY(int xPos, int yPos, int param){
   bool isThere = false;
   if(xPos < xSize_ && yPos < ySize_ && xPos >= 0 && yPos >= 0){
