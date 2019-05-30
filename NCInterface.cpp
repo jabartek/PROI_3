@@ -514,7 +514,7 @@ int readInt(std::string temp) {
                 value = std::stoi(temp);
                 error = false;
         }
-        catch (std::invalid_argument || std::out_of_range) {
+        catch (...) {
                 error = true;
         }
         if(error) return -1;
