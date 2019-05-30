@@ -20,68 +20,68 @@
 class Ship;
 
 class Grid {
-  public:
-    Grid(int, int);
+public:
+Grid(int, int);
 
-  Grid();
+Grid();
 
-  ~Grid();
+~Grid();
 
-  int getNeighbors(int, int);
+int getNeighbors(int, int);
 
-  Ship * getShip(int, int);
+bool isRevealed(int,int);
 
-  void setShip(Ship * , int, int, int);
+Ship * getShip(int, int);
 
-  void removeShip(int, int);
+void setShip(Ship *, int, int, int);
 
-  void printTile(int);
+void removeShip(int, int);
 
-  inline int addAlive() {
-    return ++alive_;
-  };
+inline int addAlive() {
+        return ++alive_;
+};
 
-  inline int delAlive() {
-    return --alive_;
-  };
+inline int delAlive() {
+        return --alive_;
+};
 
-  inline int getAlive() {
-    return alive_;
-  };
+inline int getAlive() {
+        return alive_;
+};
 
-  char renderXY(int, int, int param = 0);
+char renderXY(int, int, int param = 0);
 
-  void addAtXY(int, int);
+void addAtXY(int, int);
 
-  void subAtXY(int, int);
+void subAtXY(int, int);
 
-  inline int getXSize() {
-    return xSize_;
-  };
+inline int getXSize() {
+        return xSize_;
+};
 
-  inline int getYSize() {
-    return ySize_;
-  };
+inline int getYSize() {
+        return ySize_;
+};
 
-  int shotAtXY(int, int);
+int shotAtXY(int, int);
 
-  int getTileNum(int, int);
+int getTileNum(int, int);
 
-  void printGrid();
-  void printGrid(int);
+void printGrid();
+void printGrid(int);
 
-  private:
-    void allocation();
-  int ownerId_;
-  int xSize_;
-  int ySize_;
+private:
+void allocation();
+int ownerId_;
+int xSize_;
+int ySize_;
 
-  int alive_;
+int alive_;
 
-  Ship * ** ships_;
-  int ** neighbors_;
-  int ** tileNum_;
-  bool ** revealed_;
+Ship * ** ships_;
+int ** neighbors_;
+int ** tileNum_;
+bool ** revealed_;
 };
 
 #endif //STATKI_GRID_H

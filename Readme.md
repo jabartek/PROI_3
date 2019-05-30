@@ -1,5 +1,3 @@
-Bartłomiej Janowski, grupa 2I1
-
 # Statki – gra turowa (Projekt C++ w ramach PROI)
 
 ## Założenia

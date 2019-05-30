@@ -41,12 +41,18 @@ class Ship {
     return size_;
   };
 
+    inline int getHeadX() { return headX_;};
+    inline int getHeadY() { return headY_;};
+    inline int getHeading() { return heading_;};
+
   bool isDead();
 
   char renderTile(int, int param = 0);
 
+
+
 protected:
-    int heading_ = -1;
+  int heading_ = -1;
   int headX_ = -1;
   bool isPlaced_ = false;
   int headY_ = -1;
@@ -58,6 +64,7 @@ protected:
 class Carrier: public Ship {
   public:
     Carrier();
+    ~Carrier();
   void damageTile(int);
   int getTile(int);
   private: int hitTiles_[5];
@@ -66,6 +73,7 @@ class Carrier: public Ship {
 class Battleship: public Ship {
   public:
     Battleship();
+    ~Battleship();
   void damageTile(int);
   int getTile(int);
   private: int hitTiles_[4];
@@ -74,6 +82,7 @@ class Battleship: public Ship {
 class Cruiser: public Ship {
   public:
     Cruiser();
+    ~Cruiser();
   void damageTile(int);
   int getTile(int);
   private: int hitTiles_[3];
@@ -82,6 +91,7 @@ class Cruiser: public Ship {
 class Destroyer: public Ship {
   public:
     Destroyer();
+    ~Destroyer();
   void damageTile(int);
   int getTile(int);
   private: int hitTiles_[2];

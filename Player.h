@@ -13,29 +13,42 @@
 
 class Player {
 public:
-  Player();
-  ~Player();
+Player();
+~Player();
 
-  void setGrid(int, int);
-  inline int shipNum(){return inventory_.size();};
-  inline std::list<Ship*>* getInventory(){return &inventory_;};
-  inline Grid* getGrid(){ return grid_;};
-  inline bool isDead(){ return (getGrid()->getAlive()<=0);};
+void setGrid(int, int);
+inline int shipNum(){
+        return inventory_.size();
+};
+inline std::list<Ship*>* getInventory(){
+        return &inventory_;
+};
+inline Grid* getGrid(){
+        return grid_;
+};
+inline bool isDead(){
+        return (getGrid()->getAlive()<=0);
+};
 
-  int getPending(int);
-  int getPlaced(int);
+int getPending(int);
+int getPlaced(int);
+int getSunken(int);
 
-  bool placeShip(int, int, int);
-  void giveShip(Ship*);
-  void removeShip(Ship*);
+int shotAtGridXY(int,int);
 
-  void skipInventory();
+bool placeShip(int, int, int);
+void giveShip(Ship*);
+void removeShip(Ship*);
+
+void skipInventory();
+void  addPlaced(int);
 
 private:
-  int pending_[4] = {0,0,0,0};
-  int placed_[4] = {0,0,0,0};
-  Grid* grid_ = nullptr;
-  std::list<Ship*> inventory_ = {};
+int pending_[4] = {0,0,0,0};
+int placed_[4] = {0,0,0,0};
+int sunken_[4] = {0,0,0,0};
+Grid* grid_ = nullptr;
+std::list<Ship*> inventory_ = {};
 };
 
 #endif //STATKI_PLAYER_H

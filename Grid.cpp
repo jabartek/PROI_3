@@ -10,11 +10,11 @@ Grid::Grid():xSize_(1), ySize_(1) {
 }
 
 Grid::~Grid() {
+
     for (int i = 0; i < ySize_; i++) {
         for (int j = 0; j < xSize_; j++) {
-            if (ships_[i][j] != nullptr) {
                 delete ships_[i][j];
-            }
+                ships_[i][j] = nullptr;
         }
     }
     for (int i = 0; i < ySize_; i++) {
@@ -54,6 +54,12 @@ void Grid::setShip(Ship* s, int tile, int xPos, int yPos) {
 int Grid::getNeighbors(int xPos, int yPos) {
     if (xPos >= 0 && xPos < xSize_ && yPos >= 0 && yPos < ySize_) {
         return neighbors_[yPos][xPos];
+    } else return -1;
+}
+
+bool Grid::isRevealed(int xPos, int yPos) {
+    if (xPos >= 0 && xPos < xSize_ && yPos >= 0 && yPos < ySize_) {
+        return revealed_[yPos][xPos];
     } else return -1;
 }
 
@@ -106,29 +112,31 @@ char Grid::renderXY(int xPos, int yPos, int param){
       if (isThere) {
           return ships_[yPos][xPos]->renderTile(tileNum_[yPos][xPos], param);
         }
-    else return '=';
+    else if(revealed_[yPos][xPos])
+      return '#';
+    return '=';
     break;
   }
 }
 return '?';
 }
 
-void Grid::printGrid(int param) {
-    for (int i = 0; i < ySize_; i++) {
-        for (int j = 0; j < xSize_; j++) {
-          std::cout<<renderXY(j, i);
-        }
-        std::cout << std::endl;
-    }
-}
+
 
 int Grid::shotAtXY(int xPos, int yPos) {
   int res = 0;
+  bool sunken = false;
   if(getShip(xPos, yPos) != nullptr){
     res = getShip(xPos, yPos)->shotAtTile(getTileNum(xPos,yPos));
+    sunken = getShip(xPos, yPos)->isDead();
   }
-  revealed_[yPos][xPos] = true;
-  return res;
+  if(yPos<ySize_ && xPos<xSize_ && yPos>=0 && xPos>=0)
+    revealed_[yPos][xPos] = true;
+  if(sunken && res == 1){
+    delAlive();
+    return -1;
+  }
+  else return (int) (res>0);
 }
 
 

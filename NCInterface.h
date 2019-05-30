@@ -1,20 +1,36 @@
-#ifndef NCINTERFACE
-#define NCINTERFACE
+#ifndef STATKI_NCINTERFACE_H
+#define STATKI_NCINTERFACE_H
 
 #include "ncurses.h"
 #include "Game.h"
 #include "Ship.h"
+#include "SaveGame.h"
 #include <cstring>
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 
 
 class GUI{
 public:
+  GUI(Game*);
+  GUI();
   ~GUI();
+
+
+  void shipPlacing(Game*);
+  void shootShips(Game*);
+  void printMap(Game*, int,int);
+  void placeShipsInterface(Game*,int);
+  void printInventory(Game*, int);
+  void printFleet(Game*, int);
+  void visualiseShip(bool,int,int,int,int, WINDOW*);
+
+  //DATA. As used often and only in pounter form it's made public
   WINDOW *maps[2] = {nullptr,nullptr};
   WINDOW *inventory[2] = {nullptr,nullptr};
+  WINDOW *alert = nullptr;
   int mapX=20;
   int mapY=20;
 };
@@ -26,33 +42,36 @@ public:
 	int hdg=0;
 };
 
-Game* mainMenuInterface();
-
-void printNewGameInterface(int*);
-void newGameInterface(Game*);
-
-void printInventory(GUI*, Game*, int);
-
-void placeShipsInterface(Game*, GUI*,int);
-void printPlaceShipsInterface(Game*, int);
-
-void playGameInterface(Game*);
-
+//GUI initialiser
 GUI* initializeGUI(Game*);
 
-void shipPlacing(Game*, GUI*);
 
-void printMap(GUI*, Game*, int,int);
 
-void holdPlayer(int);
 
-void shootShips(Game*, GUI*);
 
+
+
+
+
+
+
+//helper functions for windows
 WINDOW *create_newwin(int height, int width, int starty, int startx);
 void destroy_win(WINDOW *local_win);
 
-void visualiseShip(bool,int,int,int,int, WINDOW*);
 
+//independent intefraces
+Game* mainMenuInterface();
+void newGameInterface(Game*);
+void printNewGameInterface(int*);
+void playGameInterface(Game*);
+void displayWinner(int);
+Game* loadGameInterface();
+void saveGameInterface(Game*);
+void holdPlayer(int);
+
+//helper function for integer inputs
 int readInt(std::string);
+
 
 #endif //STATKI_NCINTERFACE_H

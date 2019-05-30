@@ -27,19 +27,26 @@ public:
   void startGame(int, int, int, int, int, int);
   void runGame(int);
 
-  void togglePlayer(){currentPlayer = (currentPlayer+1)%2;};
+  inline void toggleRunning(){
+    isRunning = !isRunning;
+  }
+
+  inline void setPlayer(int s){
+    currentPlayer = s;
+  }
+
+  inline void togglePlayer(){currentPlayer = (currentPlayer+1)%2;};
 
   Player* getP(int);
-  Player* getP1(){
-    return getP(0);
-  };
-  Player* getP2(){
-    return getP(1);
-  };
 
   inline bool wasStarted(){return isRunning;};
   inline int currPlayer(){return currentPlayer;};
 
+  inline int getXSize(){return xSize_;};
+  inline int getYSize(){return ySize_;};
+
+
+  inline void setSaved(){saved_ = true;};
   int hasWon();
   void abortGame();
 
@@ -47,10 +54,13 @@ public:
 
 
 private:
+  bool saved_ = false;
   Player P_[2];
   bool isRunning = false;
-  int currentPlayer = -1;
+    int currentPlayer = 0;
   int shipCounts[4] = {0,0,0,0};
+  int xSize_ = -1;
+  int ySize_ = -1;
 };
 
 #endif //STATKI_GAME_H

@@ -8,92 +8,24 @@
 
 int main()
 {
-
-    //start
-    //initscr();
-		//printw( "Press any key to start the program..." );
-    //noecho();
-
-	  initscr();
-		        start_color();
-	  noecho();
-		curs_set(0);
-		cbreak();
+	  initscr(); //screen initialisation for ncurses
+	  noecho(); //disables printing to std output
+		curs_set(0); //hides cursor
+		cbreak(); //enables special keys
 		Game* game = mainMenuInterface();
-		if (game==nullptr){
-			endwin();
-			return 0;
-		}
-		GUI* gameInterface = initializeGUI(game);
+		GUI* gameInterface = new GUI(game);
 		if(!game->wasStarted()){
-			shipPlacing(game, gameInterface);
+			gameInterface->shipPlacing(game);
 			game->runGame(0);
 		}
-		while(game->hasWon()==-1){
-			shootShips(game, gameInterface);
+		int winner = -1;
+		while(winner==-1){
+			gameInterface->shootShips(game);
+			winner = game->hasWon();
 		}
-
-		/*
-
-    //rozpoczynamy wyswietlanie menu!
-    int znak;
-		char ab[] = " ";
-		curs_set(0);
-    do
-    {
-        //pobieranie znaku
-        znak = getch();
-        clear();
-        if( znak == 'w' && a.y >= 1 )
-        {
-            a.y--;
-        }
-        else if( znak == 'a' && a.x >= 1 )
-        {
-            a.x--;
-        }
-        else if( znak == 'd' && a.x < game1.getP2()->getGrid()->getXSize()-1)
-        {
-            a.x++;
-        }
-        else if( znak == 's' && a.y < game1.getP2()->getGrid()->getYSize()-1	)
-        {
-            a.y++;
-        }
-				else if( znak == 'r'){
-					a.hdg++;
-					a.hdg=a.hdg%4;
-				}
-				else if(znak == 'p' && abc->isValid(game1.getP2()->getGrid(), a.x, a.y, a.hdg)){
-					abc->placeAtXY(game1.getP2()->getGrid(), a.x, a.y, a.hdg);
-				}
-
-        if( znak == 10 )
-        {
-					game1.getP2()->getGrid()->shotAtXY(a.x, a.y);
-        }
-
-        //wyswietlanie
-				for(int i=0; i<game1.getP2()->getGrid()->getYSize(); i++){
-					for(int j=0; j<game1.getP2()->getGrid()->getXSize(); j++){
-							ab[0] = game1.getP2()->getGrid()->renderXY(j,i);
-		            mvprintw( 3 + 2*i, 1 + 2*j,  ab);
-					}
-				}
-				attron( A_REVERSE );
-				ab[0] = game1.getP2()->getGrid()->renderXY(a.x,a.y);
-				mvprintw( 0,0, "WASD to move cursor. R to rotate. P to place. Enter to shoot.");
-				mvprintw( 3+2*a.y, 1+2*a.x, ab);
-        attroff( A_REVERSE );
-				visualiseShip(abc->isValid(game1.getP2()->getGrid(), a.x, a.y, a.hdg), a.x, a.y, a.hdg, 2, curscr);
-    } while( znak != 'c' );
-
-    move( 9, 3 );
-    printw( "Program stopped. Press any key to continue..." );
-    getch();
-		*/
+		displayWinner(winner);
+		delete gameInterface;
+		delete game;
     endwin();
 		return 0;
-
-
 }
