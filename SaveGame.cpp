@@ -1,4 +1,4 @@
-#include "saveGame.h"
+#include "SaveGame.h"
 
 bool saveGame (Game *game, std::string filePath){
         std::ofstream outFile (filePath);
