@@ -19,48 +19,60 @@ class Ship;
 
 class Grid;
 
-class Game{
+class Game {
 public:
-  Game();
-  ~Game();
+Game();
+~Game();
 
-  void startGame(int, int, int, int, int, int);
-  void runGame(int);
+void startGame(int, int, int, int, int, int);
+void runGame(int);
 
-  inline void toggleRunning(){
-    isRunning = !isRunning;
-  }
+inline void toggleRunning(){
+        isRunning = !isRunning;
+}
 
-  inline void setPlayer(int s){
-    currentPlayer = s;
-  }
+inline void setPlayer(int s){
+        currentPlayer = s;
+}
 
-  inline void togglePlayer(){currentPlayer = (currentPlayer+1)%2;};
+inline void togglePlayer(){
+        currentPlayer = (currentPlayer+1)%2;
+};
 
-  Player* getP(int);
+Player* getP(int);
 
-  inline bool wasStarted(){return isRunning;};
-  inline int currPlayer(){return currentPlayer;};
+inline bool wasStarted(){
+        return isRunning;
+};
+inline int currPlayer(){
+        return currentPlayer;
+};
 
-  inline int getXSize(){return xSize_;};
-  inline int getYSize(){return ySize_;};
+inline int getXSize(){
+        return xSize_;
+};
+inline int getYSize(){
+        return ySize_;
+};
 
 
-  inline void setSaved(){saved_ = true;};
-  int hasWon();
-  void abortGame();
+inline void setSaved(){
+        saved_ = true;
+};
+int hasWon();
+void abortGame();
 
 
 
 
 private:
-  bool saved_ = false;
-  Player P_[2];
-  bool isRunning = false;
-    int currentPlayer = 0;
-  int shipCounts[4] = {0,0,0,0};
-  int xSize_ = -1;
-  int ySize_ = -1;
+bool saved_ = false;
+Player P_[2];
+bool isRunning = false;
+int currentPlayer = 0;
+int shipCounts[4] = {0,0,0,0};
+int xSize_ = -1;
+int ySize_ = -1;
 };
 
 #endif //STATKI_GAME_H

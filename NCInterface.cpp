@@ -55,70 +55,70 @@ Game* mainMenuInterface(){
 }
 
 Game* loadGameInterface(){
-  char loadingGame[] = "LOADING GAME";
-  char insertPath[] = "INSERT FILEPATH: ";
-  char failedLoading[] = "FAILED LOADING FROM INSERTED FILEPATH!";
-  Game* result = new Game;
-  std::string path = "";
-  bool success = false;
-  bool failedLoad = false;
-  char str[159];
-  while(!success){
-    clear();
-    if(failedLoad){
-      mvprintw(LINES/2-3,COLS/2-strlen(failedLoading)/2,failedLoading);
-    }
-    mvprintw(LINES/2-1,COLS/2-strlen(loadingGame)/2,loadingGame);
-    mvprintw(LINES/2,COLS/2-strlen(insertPath)/2,insertPath);
-    curs_set(1);
-    echo();
-    refresh();
-    getnstr(str, 159);
-    path = str;
-    if(loadGame(result, path)){
-      success = true;
-    }
-    else
-      failedLoad = true;
-  }
-  noecho();
-  curs_set(0);
-  return result;
+        char loadingGame[] = "LOADING GAME";
+        char insertPath[] = "INSERT FILEPATH: ";
+        char failedLoading[] = "FAILED LOADING FROM INSERTED FILEPATH!";
+        Game* result = new Game;
+        std::string path = "";
+        bool success = false;
+        bool failedLoad = false;
+        char str[159];
+        while(!success) {
+                clear();
+                if(failedLoad) {
+                        mvprintw(LINES/2-3,COLS/2-strlen(failedLoading)/2,failedLoading);
+                }
+                mvprintw(LINES/2-1,COLS/2-strlen(loadingGame)/2,loadingGame);
+                mvprintw(LINES/2,COLS/2-strlen(insertPath)/2,insertPath);
+                curs_set(1);
+                echo();
+                refresh();
+                getnstr(str, 159);
+                path = str;
+                if(loadGame(result, path)) {
+                        success = true;
+                }
+                else
+                        failedLoad = true;
+        }
+        noecho();
+        curs_set(0);
+        return result;
 }
 
 void saveGameInterface(Game *game){
-  char savingGame[] = "SAVING GAME";
-  char insertPath[] = "INSERT FILEPATH: ";
-  char failedSaving[] = "FAILED SAVING TO INSERTED FILEPATH!";
-  std::string path = "";
-  bool success = false;
-  bool failedOpen = false;
-  char str[159];
-  while(!success){
-    clear();
-    if(failedOpen){
-      mvprintw(LINES/2-3,COLS/2-strlen(failedSaving)/2,failedSaving);
-    }
-    mvprintw(LINES/2-1,COLS/2-strlen(savingGame)/2,savingGame);
-    mvprintw(LINES/2,COLS/2-strlen(insertPath)/2,insertPath);
-    curs_set(1);
-    echo();
-    refresh();
-    getnstr(str, 159);
-    path = str;
-    std::ofstream outFile (path);
-    if(!outFile.is_open()){
-      failedOpen = true;
-    }
-    else{
-      outFile.close();
-      saveGame(game, path);
-      success = true;
-    }
-  }
-  noecho();
-  curs_set(0);
-  game->setSaved();
+        char savingGame[] = "SAVING GAME";
+        char insertPath[] = "INSERT FILEPATH: ";
+        char failedSaving[] = "FAILED SAVING TO INSERTED FILEPATH!";
+        std::string path = "";
+        bool success = false;
+        bool failedOpen = false;
+        char str[159];
+        while(!success) {
+                clear();
+                if(failedOpen) {
+                        mvprintw(LINES/2-3,COLS/2-strlen(failedSaving)/2,failedSaving);
+                }
+                mvprintw(LINES/2-1,COLS/2-strlen(savingGame)/2,savingGame);
+                mvprintw(LINES/2,COLS/2-strlen(insertPath)/2,insertPath);
+                curs_set(1);
+                echo();
+                refresh();
+                getnstr(str, 159);
+                path = str;
+                std::ofstream outFile (path);
+                if(!outFile.is_open()) {
+                        failedOpen = true;
+                }
+                else{
+                        outFile.close();
+                        saveGame(game, path);
+                        success = true;
+                }
+        }
+        noecho();
+        curs_set(0);
+        game->setSaved();
 }
 
 void printNewGameInterface(int params[6]){
@@ -188,8 +188,8 @@ void newGameInterface(Game *game){
                         }
                         else {
                                 params[i] = readInt(str_new);
-                                if(i>1){
-                                  totalShips+=params[i];
+                                if(i>1) {
+                                        totalShips+=params[i];
                                 }
                                 break;
                         }
@@ -249,7 +249,7 @@ void GUI::printFleet(Game *game, int player){
 
 
 GUI::GUI(){
-  //default ctor;
+        //default ctor;
 }
 
 
@@ -274,9 +274,9 @@ GUI::GUI(Game* game){
 void GUI::visualiseShip(bool ifValid,int xPos,int yPos,int hdg,int shipSize, WINDOW *win){
         char ch[2] = "";
         if(ifValid)
-            ch[0] = 'O';
+                ch[0] = 'O';
         else
-          ch[0] = 'X';
+                ch[0] = 'X';
         switch (hdg) {
         default:
                 for(int i=0; i<shipSize; i++) {
@@ -424,11 +424,11 @@ void GUI::shootShips(Game *game){
                 ch = wgetch(this->maps[otherPlayer]);
                 wclear(alertResult);
                 wrefresh(alertResult);
-                if(ch == 'v'){
-                    saveGameInterface(game);
-                    delwin(alertResult);
-                    return;
-                  }
+                if(ch == 'v') {
+                        saveGameInterface(game);
+                        delwin(alertResult);
+                        return;
+                }
                 if(ch == 'w' && cur.y >0) {
                         cur.y--;
                 }
@@ -495,15 +495,15 @@ void GUI::printMap(Game *game, int param, int player){
 
 
 void displayWinner(int winner){
-  clear();
-  refresh();
-  if(winner!=0)
-    mvprintw(LINES/2,COLS/2-12,"THE WINNER IS PLAYER %d",winner);
-  else{
-    mvprintw(LINES/2-1,COLS/2-5,"GAME SAVED!");
-    mvprintw(LINES/2,COLS/2-7,"SEE YOU LATER!");
-  }
-  getch();
+        clear();
+        refresh();
+        if(winner!=0)
+                mvprintw(LINES/2,COLS/2-12,"THE WINNER IS PLAYER %d",winner);
+        else{
+                mvprintw(LINES/2-1,COLS/2-5,"GAME SAVED!");
+                mvprintw(LINES/2,COLS/2-7,"SEE YOU LATER!");
+        }
+        getch();
 }
 
 

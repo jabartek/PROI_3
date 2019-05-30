@@ -48,14 +48,14 @@ bool loadGame(Game *game, std::string filePath){
                 return 0;
         }
         else
-        xSize = readInt(temp);
+                xSize = readInt(temp);
         inFile >> temp;
         if(readInt(temp)<0) {
                 inFile.close();
                 return 0;
         }
         else
-        ySize = readInt(temp);
+                ySize = readInt(temp);
 
         inFile >> temp;
         if(readInt(temp)<0) {
@@ -63,102 +63,102 @@ bool loadGame(Game *game, std::string filePath){
                 return 0;
         }
         else
-        sPlayer = readInt(temp);
+                sPlayer = readInt(temp);
         game->startGame(xSize, ySize, 0,0,0,0);
         game->setPlayer(sPlayer);
         temp = "";
         for(int i = 0; i<2; i++) {
                 inFile >> temp;
                 while(temp != "P") {
-                  try{
-                        if(readInt(temp)>=2 && readInt(temp) <=5) {
-                                tempS = readInt(temp);
+                        try{
+                                if(readInt(temp)>=2 && readInt(temp) <=5) {
+                                        tempS = readInt(temp);
+                                }
+                                else{
+                                        throw -1;
+                                }
+                                inFile >> temp;
+                                if(readInt(temp)>=0) {
+                                        tempX = readInt(temp);
+                                }
+                                else{
+                                        throw -1;
+                                }
+                                inFile >> temp;
+                                if(readInt(temp)>=0) {
+                                        tempY = readInt(temp);
+                                }
+                                else{
+                                        throw -1;
+                                }
+                                inFile >> temp;
+                                if(readInt(temp)>=0) {
+                                        tempH = readInt(temp);
+                                }
+                                else{
+                                        throw -1;
+                                }
                         }
-                        else{
-                          throw -1;
+                        catch(int) {
+                                wasError = true;
                         }
-                        inFile >> temp;
-                        if(readInt(temp)>=0) {
-                                tempX = readInt(temp);
+                        if (wasError) {
+                                break;
                         }
-                        else{
-                          throw -1;
-                        }
-                        inFile >> temp;
-                        if(readInt(temp)>=0) {
-                                tempY = readInt(temp);
-                        }
-                        else{
-                          throw -1;
-                        }
-                        inFile >> temp;
-                        if(readInt(temp)>=0) {
-                                tempH = readInt(temp);
-                        }
-                        else{
-                          throw -1;
-                        }
-                      }
-                      catch(int){
-                        wasError = true;
-                      }
-                      if (wasError){
-                        break;
-                      }
 
                         Ship *s = nullptr;
                         if(tempS == 2)
-                            s = new Destroyer;
+                                s = new Destroyer;
                         else if(tempS == 3 )
-                            s = new Cruiser;
+                                s = new Cruiser;
                         else if(tempS == 4 )
-                            s = new Battleship;
+                                s = new Battleship;
                         else if(tempS == 5)
-                            s = new Carrier;
+                                s = new Carrier;
                         else{
-                          wasError = true;
-                          break;
+                                wasError = true;
+                                break;
                         }
-                        if(s != nullptr){
-                          if(!s->placeAtXY(game->getP(i)->getGrid(), tempX, tempY, tempH)){
-                            delete s;
-                            wasError = true;
-                            break;
-                          }
-                          else{
-                            game->getP(i)->addPlaced(s->getSize());
-                          }
+                        if(s != nullptr) {
+                                if(!s->placeAtXY(game->getP(i)->getGrid(), tempX, tempY, tempH)) {
+                                        delete s;
+                                        wasError = true;
+                                        break;
+                                }
+                                else{
+                                        game->getP(i)->addPlaced(s->getSize());
+                                }
                         }
                         else{
-                          wasError = true;
-                          break;
+                                wasError = true;
+                                break;
                         }
                         inFile >> temp;
                 }
-                for(int j = 0; j<xSize;j++){
-                  for(int k = 0; k<ySize; k++){
-                    inFile>>temp;
-                    if(readInt(temp)<0){
-                      wasError=true;
-                      break;
-                    }
-                    else if(readInt(temp)>0){
-                      game->getP(i)->shotAtGridXY(j,k);
-                    }
-                  }
-                  if(wasError) break;
+                for(int j = 0; j<xSize; j++) {
+                        for(int k = 0; k<ySize; k++) {
+                                inFile>>temp;
+                                if(readInt(temp)<0) {
+                                        wasError=true;
+                                        break;
+                                }
+                                else if(readInt(temp)>0) {
+                                        game->getP(i)->shotAtGridXY(j,k);
+                                }
+                        }
+                        if(wasError) break;
                 }
                 if(wasError) break;
 
-}
+        }
 
         inFile.close();
-        if(!wasError){
-          game->toggleRunning();
+        if(!wasError) {
+                game->toggleRunning();
         }
         else{
-          delete game;
-          game = new Game;
+                delete game;
+                game = new Game;
         }
         return !wasError;
 }
